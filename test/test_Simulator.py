@@ -2,23 +2,40 @@
 import os
 import sys
 sys.path.append(os.getcwd()+'/lib')
+import time
 import matplotlib.pyplot as plt
 from Simulator import Simulator
 
 
 if __name__ == "__main__":
-    # define map
-    map_dimensionStr = "2d"
-    map_resolution = 1
-    mapSize_x_meter = 10.0
-    mapSize_y_meter = 10.0
-    # set mapSize_z_meter to 0 if select 2d
-    mapSize_z_meter = 0.0
+    frequency = 10
+    dimensionStr = "2d"
 
+    # created by user
+    dynamicsFunction = lambda x: [x[0]+5, x[1]+5]
+    # dynamicsFunction = lambda x,u: [x[0]+u, x[1]-u]
 
-    MySimulator = Simulator(map_dimensionStr, map_resolution, mapSize_x_meter, mapSize_y_meter, mapSize_z_meter)
-    MySimulator.compute_path()
-    MySimulator.plotOnce()
+    dynamicsFunctionDict = {"modelType": "discrete", "dynamicsFunction": dynamicsFunction}
 
+    # initialize a Simulator
+    MySimulator = Simulator(frequency, dimensionStr)
+    # load a dynamics
+    MySimulator.loadDynamics(dynamicsFunctionDict)
+    # create an empty figure
+    MySimulator.createFigure()
 
-    print("Program end...")
+    # this is a single agent
+    xNow = [1, 2]
+
+    for k in range(20):
+        # convert xNow to position2d
+        ####
+
+        MySimulator.plotOnce(position2d)
+
+        # move your agent one step forward
+        ####
+
+        plt.pause(1/frequency)
+
+    plt.show()
